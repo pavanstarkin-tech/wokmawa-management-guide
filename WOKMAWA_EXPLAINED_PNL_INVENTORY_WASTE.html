@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WokMawa — Complete Restaurant Management Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      themeVariables: {
+        fontFamily: 'Poppins, sans-serif',
+        primaryColor: '#F59E0B',
+        edgeColor: '#D97706',
+        lineColor: '#D97706'
+      }
+    });
+  </script>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm 15mm 15mm 15mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1E293B;
+      background: #FFFFFF;
+      line-height: 1.65;
+      font-size: 13.5px;
+      margin: 0;
+      padding: 30px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #0F172A;
+      font-size: 26px;
+      font-weight: 800;
+      border-bottom: 3px solid #F59E0B;
+      padding-bottom: 12px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      color: #0F172A;
+      font-size: 19px;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 6px;
+      page-break-after: avoid;
+    }
+    h3 {
+      color: #334155;
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 22px;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+    }
+    p, li {
+      color: #334155;
+    }
+    strong {
+      color: #0F172A;
+    }
+    hr {
+      border: 0;
+      border-top: 1px dashed #CBD5E1;
+      margin: 28px 0;
+    }
+    .callout {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 18px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      page-break-inside: avoid;
+    }
+    .callout-important {
+      background: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      color: #92400E;
+    }
+    .callout-tip {
+      background: #ECFDF5;
+      border-left: 4px solid #10B981;
+      color: #065F46;
+    }
+    .callout-note {
+      background: #EFF6FF;
+      border-left: 4px solid #3B82F6;
+      color: #1E40AF;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      page-break-inside: avoid;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    th {
+      background: #F8FAFC;
+      color: #0F172A;
+      font-weight: 700;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid #E2E8F0;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    tr:nth-child(even) td {
+      background: #FAFAFA;
+    }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: #F1F5F9;
+      color: #0F172A;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+    pre {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 14px 18px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      page-break-inside: avoid;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .mermaid-container {
+      display: flex;
+      justify-content: center;
+      margin: 22px 0;
+      padding: 16px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      page-break-inside: avoid;
+    }
+    .mermaid {
+      background: transparent;
+    }
+    @media print {
+      body {
+        padding: 0;
+        max-width: 100%;
+      }
+      .mermaid-container {
+        border: 1px solid #CBD5E1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🍜 WokMawa Restaurant Management Guide</h1>
+<h2>Explaining Profit & Loss (P&L), Inventory Management, and Waste Calculation Like You're in High School!</h2>
+
+<p>Welcome! If accounting words like <strong>COGS</strong>, <strong>Depreciation</strong>, <strong>Variance</strong>, and <strong>Prime Cost</strong> sound like a foreign language, don't worry.</p>
+
+<p>Think of <strong>WokMawa</strong> like the ultimate noodle shop. You buy raw noodles, chicken, veggies, and sauces; your chefs fire up the woks; happy customers pay for tasty bowls; and at the end of the month, you want to know: <strong>"Did we actually make money, or did we lose money?"</strong></p>
+
+<p>This guide breaks down the exact math, logic, and systems running inside the WokMawa software in plain, crystal-clear English with visual diagrams and real-life examples.</p>
+
+<hr/>
+
+<h2>📑 Table of Contents</h2>
+<ol><li>[The Big Picture: How Money Moves in a Restaurant](#1-the-big-picture-how-money-moves-in-a-restaurant)</li><li>[Section 1: Profit & Loss (P&L) Calculation Explained](#2-section-1-profit--loss-pl-calculation-explained)</li></ol>
+<ul><li>[The Gold Standard Restaurant P&L Equation](#the-gold-standard-restaurant-pl-equation)</li><li>[The Golden Rule: Why GST is NOT Revenue](#the-golden-rule-why-gst-is-not-revenue)</li><li>[What is COGS? (Two Methods Explained)](#what-is-cogs-cost-of-goods-sold)</li><li>[What is Prime Cost? (The #1 Number Every Owner Watches)](#what-is-prime-cost)</li><li>[Industry Health Benchmarks (Good vs Bad)](#industry-health-benchmarks)</li></ul>
+<ol><li>[Section 2: Waste Calculation Explained](#3-section-2-waste-calculation-explained)</li></ol>
+<ul><li>[What Counts as Waste?](#what-counts-as-waste)</li><li>[How Rupee Loss is Calculated](#how-rupee-loss-is-calculated)</li><li>[Why Waste Has Its Own Dedicated Line on the P&L](#why-waste-has-its-own-dedicated-line)</li></ul>
+<ol><li>[Section 3: Inventory Management — All 8 Tabs Explained](#4-section-3-inventory-management--all-8-tabs-explained)</li></ol>
+<ul><li>[Tab 1: Stock on Hand (The Digital Shelf)](#tab-1-stock-on-hand-items)</li><li>[Tab 2: Recipes / BOM (The Recipe Blueprint)](#tab-2-recipes--bom-bill-of-materials)</li><li>[Tab 3: Receive Stock (Deliveries & Vendor Packs)](#tab-3-receive-stock-purchases)</li><li>[Tab 4: Wastage (Logging Damaged & Spoiled Food)](#tab-4-wastage-tab)</li><li>[Tab 5: Stock Count (The Physical Audit)](#tab-5-stock-count-audit)</li><li>[Tab 6: Reorder Alerts (Never Run Out of Chicken!)](#tab-6-reorder-alerts-low)</li><li>[Tab 7: Costing (Dish Margins & Food Cost %)](#tab-7-dish-costing--margins)</li><li>[Tab 8: Movement Log (The Immutable Stock Bank Statement)](#tab-8-movement-log-audit-ledger)</li></ul>
+<ol><li>[Complete End-to-End Walkthrough (A Day in WokMawa)](#5-complete-end-to-end-walkthrough-a-day-in-wokmawa)</li></ol>
+
+<hr/>
+
+<h2>1. The Big Picture: How Money Moves in a Restaurant</h2>
+
+<p>Imagine your noodle shop had a giant clear glass jar on the counter. Every time a customer pays, money goes into the jar. But as the day goes on, money comes out to pay for raw chicken, chef wages, electricity, rent, and broken bowls. Whatever is left in the jar at the end of the month is your <strong>Net Profit</strong>.</p>
+
+<p>Here is how WokMawa tracks every single rupee:</p>
+
+<p><div class="mermaid-container"><pre class="mermaid">flowchart TD
+    A["🛒 Total Orders (Menu Price x Quantity)"] --> B["Gross Sales"]
+    B --> C["Minus Discounts (Coupons / Offers)"]
+    C --> D["= NET SALES (True Customer Food Spend)"]
+    
+    D --> E["Plus Service Charges + Delivery Fees"]
+    E --> F["= TOTAL REVENUE"]
+    
+    F --> G["Minus COGS (Raw Ingredients Used)"]
+    G --> H["= GROSS PROFIT"]
+    
+    H --> I["Minus Labour Costs (Chefs, Waiters, Cleaners)"]
+    I --> J["= PRIME COST MILESTONE (COGS + Labour)"]
+    
+    J --> K["Minus Operating & Occupancy (Rent, Power, Gas, Packing)"]
+    K --> L["Minus Logged Kitchen Wastage"]
+    L --> M["🎉 = NET PROFIT (Money You Actually Keep!)"]</pre></div></p>
+
+<hr/>
+
+<h2>2. Section 1: Profit & Loss (P&L) Calculation Explained</h2>
+
+<h3>The Gold Standard Restaurant P&L Equation</h3>
+
+<p>Restaurant accounting is different from an IT company or a retail store. In a restaurant, your biggest costs are <strong>food</strong> and <strong>people</strong>. WokMawa uses the world-standard restaurant accounting ladder:</p>
+
+<div class="table-wrap"><table><tr><th>Line Item</th><th>Plain English Meaning</th><th>Example (One Day)</th></tr><tr><td><strong>Gross Sales</strong></td><td>The full menu price of all food ordered</td><td>₹50,000</td></tr><tr><td><strong>- Discounts</strong></td><td>Coupons or special discounts given to customers</td><td>- ₹5,000</td></tr><tr><td><strong>= NET SALES</strong></td><td><strong>The real money customers spent on your food</strong></td><td><strong>= ₹45,000</strong></td></tr><tr><td><strong>+ Service Charge</strong></td><td>The restaurant's dine-in service fee</td><td>+ ₹2,250</td></tr><tr><td><strong>+ Delivery Fee</strong></td><td>Fees charged to deliver parcels</td><td>+ ₹750</td></tr><tr><td><strong>= TOTAL REVENUE</strong></td><td><strong>Total money collected that belongs to the business</strong></td><td><strong>= ₹48,000</strong></td></tr><tr><td><strong>- COGS</strong></td><td>Cost of raw ingredients (rice, chicken, sauces, oil)</td><td>- ₹14,400 <em>(32% of Net Sales)</em></td></tr><tr><td><strong>= GROSS PROFIT</strong></td><td>Money left after paying for raw food</td><td><strong>= ₹33,600</strong> <em>(70% Gross Margin)</em></td></tr><tr><td><strong>- Labour</strong></td><td>Salaries of chefs, kitchen helpers, and service team</td><td>- ₹13,500 <em>(30% of Net Sales)</em></td></tr><tr><td><strong>- Operating & Rent</strong></td><td>Shop rent, electricity bill, LPG gas cylinders, napkins</td><td>- ₹9,000</td></tr><tr><td><strong>- Kitchen Wastage</strong></td><td>Food burnt, dropped on floor, or expired</td><td>- ₹1,200</td></tr><tr><td><strong>= NET PROFIT</strong></td><td><strong>Your actual profit before income tax</strong></td><td><strong>= ₹9,900</strong> <em>(20.6% Net Margin)</em></td></tr></table></div>
+<hr/>
+
+<h3>The Golden Rule: Why GST is NOT Revenue!</h3>
+
+<div class="callout callout-important"><strong>IMPORTANT:</strong> <strong>A common rookie mistake:</strong> Counting GST (Goods & Services Tax) as income.<br/><br/>When a customer buys a bowl of Hakka Noodles for ₹200 and pays 5% GST (₹10), they hand you <strong>₹210</strong>. <br/>- <strong>₹200</strong> belongs to WokMawa.<br/>- <strong>₹10</strong> does <strong>NOT</strong> belong to you! You are just holding it for the Government tax department.</div>
+>
+> In WokMawa's backend code (<code>utils/pnl.js</code>), <strong>GST is never included in Net Sales or Revenue</strong>. It is tracked separately under <strong>Tax Liability</strong> so the owner is never fooled into thinking they have more profit than they really do.
+
+<hr/>
+
+<h3>What is COGS? (Cost of Goods Sold)</h3>
+
+<p><strong>COGS</strong> is the cost of the raw stuff that walked out the door in your customers' stomachs. If you sell a plate of Chilli Chicken for ₹250, but the chicken pieces, garlic, bell pepper, and sauces cost you ₹75 to buy, your <strong>COGS</strong> for that plate is <strong>₹75</strong>.</p>
+
+<p>In WokMawa, you can calculate COGS using <strong>two methods</strong>:</p>
+
+<p><div class="mermaid-container"><pre class="mermaid">graph LR
+    subgraph Method 1: Recipe Method
+        M1A["Each Dish Has a Recipe (BOM)"] --> M1B["Order Sold at POS / QR"]
+        M1B --> M1C["System Automatically Deducts Grams"]
+        M1C --> M1D["Total Ingredient Value = COGS"]
+    end
+
+    subgraph Method 2: Purchases Method
+        M2A["Opening Stock Value (Start of Month)"] --> M2B["+ All Stock Purchases Received"]
+        M2B --> M2C["- Closing Stock Value (End of Month)"]
+        M2C --> M2D["= Used Stock = COGS"]
+    end</pre></div></p>
+
+<p>#### 1. Recipe Method (Real-Time Consumption)<br/><ul><li><strong>How it works:</strong> Every time an order for <em>"Kung Pao Chicken"</em> is marked <code>completed</code> or <code>preparing</code>, the computer looks up the exact grams of chicken, peanuts, soy sauce, and chilli paste from the recipe and tallies the cost.</li><li><strong>Pros:</strong> Ultra-precise, shows dish-by-dish margin.</li><li><strong>Requirement:</strong> Dishes must have recipes entered in the system. If you only entered recipes for 10 out of 50 dishes, the system will give you a warning: <em>"Only 20% of dishes have recipes, so COGS is understated."</em></li></ul></p>
+
+<p>#### 2. Purchases Method (The Stock Take Formula)<br/><ul><li><strong>The Classic Formula:</strong></li></ul><br/>  $$\text{COGS} = \text{Opening Stock} + \text{New Purchases} - \text{Closing Stock}$$<br/><ul><li><strong>Example:</strong></li><li>On Oct 1st, you had <strong>₹50,000</strong> worth of groceries on the shelves.</li><li>During October, you bought <strong>₹1,00,000</strong> more from suppliers.</li><li>On Oct 31st, you counted the shelves and found <strong>₹40,000</strong> left.</li><li>$\text{COGS} = ₹50,000 + ₹1,00,000 - ₹40,000 = \mathbf{₹1,10,000}$.</li><li><strong>Pros:</strong> Works even if you haven't typed in recipes for every single dish yet!</li></ul></p>
+
+<hr/>
+
+<h3>What is Prime Cost?</h3>
+
+<p>In the restaurant industry, <strong>Prime Cost</strong> is the ultimate heartbeat metric:</p>
+
+<p>$$\text{Prime Cost} = \text{COGS (Food Cost)} + \text{Labour Cost (Staff Wages)}$$</p>
+
+<p>Why? Because you can't easily change your rent or your electricity rates tomorrow, but <strong>you can control what food you buy and how you schedule your kitchen staff!</strong></p>
+
+<hr/>
+
+<h3>Industry Health Benchmarks</h3>
+
+<p>WokMawa colors your metrics automatically so you know immediately if your restaurant is healthy:</p>
+
+<div class="table-wrap"><table><tr><th>Metric</th><th>Formula</th><th>Good Range 🟢</th><th>Warning Range 🟡</th><th>Danger Zone 🔴</th></tr><tr><td><strong>Food Cost %</strong></td><td>$\frac{\text{COGS}}{\text{Net Sales}} \times 100$</td><td>Under 30%</td><td>30% - 35%</td><td>Above 35% <em>(Losing money on ingredients)</em></td></tr><tr><td><strong>Labour %</strong></td><td>$\frac{\text{Labour}}{\text{Net Sales}} \times 100$</td><td>Under 30%</td><td>30% - 35%</td><td>Above 35% <em>(Overstaffed for current sales)</em></td></tr><tr><td><strong>Prime Cost %</strong></td><td>$\frac{\text{COGS} + \text{Labour}}{\text{Net Sales}} \times 100$</td><td>Under 60%</td><td>60% - 65%</td><td>Above 65% <em>(Restaurant will struggle to survive)</em></td></tr><tr><td><strong>Net Margin %</strong></td><td>$\frac{\text{Net Profit}}{\text{Total Revenue}} \times 100$</td><td>Above 10%</td><td>3% - 10%</td><td>Below 3% or Negative <em>(Operating at a loss)</em></td></tr></table></div>
+<hr/>
+
+<h2>3. Section 2: Waste Calculation Explained</h2>
+
+<h3>What Counts as Waste?</h3>
+
+<p>In a busy kitchen, food gets wasted every day. But if you don't measure it, money is quietly leaking into the garbage can.</p>
+
+<p><div class="mermaid-container"><pre class="mermaid">flowchart LR
+    A["Raw Ingredients on Shelf"] --> B{"What Happened?"}
+    B -->|"Normal Cooked & Sold"| C["Sold to Diner (COGS)"]
+    B -->|"Burnt in Wok / Overcooked"| D["💥 Wastage (Kitchen Error)"]
+    B -->|"Dropped on Floor / Spilled"| E["💥 Wastage (Accident)"]
+    B -->|"Expired Veggies / Spoiled Milk"| F["💥 Wastage (Spoilage)"]
+    B -->|"Trim Loss / Fat Cut Off"| G["💥 Wastage (Prep Loss)"]</pre></div></p>
+
+<p>WokMawa provides 5 standard waste classifications:<br/><ol><li><strong><code>spoiled</code></strong>: Veggies rotted, paneer went sour, meat unfrozen too long.</li><li><strong><code>dropped</code></strong>: Plate slipped from waiter's hand, container spilled.</li><li><strong><code>expired</code></strong>: Sauces or dairy reached "use by" date before being consumed.</li><li><strong><code>overcooked</code></strong>: Chef scorched the fried rice or put 5x too much salt.</li><li><strong><code>prep_waste</code></strong>: Cutting excess meat fat or trimming veggies beyond normal prep standards.</li></ol></p>
+
+<hr/>
+
+<h3>How Rupee Loss is Calculated</h3>
+
+<p>When a chef burns 400g of diced chicken breast:<br/><ol><li>The manager opens the <strong>Wastage</strong> tab in WokMawa.</li><li>Selects item: <strong>Chicken Breast</strong>.</li><li>Enters quantity: <strong>400 g</strong> (or 0.4 kg).</li><li>System looks up the current purchase cost per unit:</li></ol><br/>   $$\text{Cost per gram} = \frac{₹250}{1000\text{g}} = ₹0.25\text{ per gram}$$<br/><ol><li>System instantly computes the exact financial loss:</li></ol><br/>   $$\text{Loss} = 400\text{g} \times ₹0.25 = \mathbf{₹100}$$<br/><ol><li><strong>Double action happens instantly:</strong></li></ol><br/><ul><li><strong>400g is removed from your digital inventory</strong> so your stock records stay truthful.</li><li><strong>₹100 is logged under Today's Wastage Loss</strong>.</li></ul></p>
+
+<hr/>
+
+<h3>Why Waste Has Its Own Dedicated Line on the P&L!</h3>
+
+<div class="callout callout-tip"><strong>TIP:</strong> <strong>Why not just bundle waste inside COGS?</strong><br/>If you hide waste inside general food costs, the chef can just say: <em>"Oh, food costs are high because vegetables got expensive this week!"</em><br/><br/>By keeping <strong>Wastage on its own standalone line on the P&L</strong>, the restaurant owner can open the dashboard and say:<br/><em>"Wait, why did we throw away ₹4,800 worth of chicken this week? Let's check who worked the evening shift and retrain them."</em><br/><strong>What gets measured gets managed!</strong></div>
+
+<hr/>
+
+<h2>4. Section 3: Inventory Management — All 8 Tabs Explained</h2>
+
+<p>The WokMawa Inventory section is divided into 8 interconnected tabs that handle everything from raw vegetables to dish profit margins.</p>
+
+<p><div class="mermaid-container"><pre class="mermaid">flowchart TD
+    subgraph INVENTORY SYSTEM
+        T1["1. Stock on Hand<br/>(Live Shelves)"]
+        T2["2. Recipes BOM<br/>(Dish Blueprints)"]
+        T3["3. Receive Stock<br/>(Vendor Deliveries)"]
+        T4["4. Wastage<br/>(Spoilage & Drops)"]
+        T5["5. Stock Count<br/>(Physical Shelf Audit)"]
+        T6["6. Reorder Alerts<br/>(Low Stock Warnings)"]
+        T7["7. Costing<br/>(Dish Profit Margins)"]
+        T8["8. Movement Log<br/>(Full Bank-Grade Ledger)"]
+    end
+
+    T3 -->|"Adds Stock (+)"| T1
+    T4 -->|"Deducts Waste (-)"| T1
+    T2 -->|"Orders Deduct (-)"| T1
+    T5 -->|"Reconciles Variance (±)"| T1
+    T1 -->|"Triggers Alerts"| T6
+    T1 & T2 -->|"Calculates Margins"| T7
+    T1 & T3 & T4 & T5 -->|"Logs Every Event"| T8</pre></div></p>
+
+<hr/>
+
+<h3>Tab 1: Stock on Hand (<code>items</code>)</h3>
+<strong>The Digital Mirror of Your Storeroom.</strong>
+<ul><li><strong>Base Units:</strong> Everything in WokMawa is tracked in one of 3 fundamental base units:</li><li><strong><code>g</code></strong> (Grams) for solids (rice, chicken, flour, noodles, onions).</li><li><strong><code>ml</code></strong> (Millilitres) for liquids (soy sauce, vinegar, cooking oil, milk).</li><li><strong><code>pcs</code></strong> (Pieces) for countables (takeaway noodle boxes, burger buns, beverage cans).</li><li><strong>No Manual Cheating:</strong> You cannot simply type over the stock quantity in this table! The only way stock changes is through an actual operational event (Receive Delivery, Cook an Order, Record Waste, or Run an Audit Count).</li><li><strong>What You See:</strong> Item code, Item Name, Category, In Stock balance, Reorder Level threshold, Cost per Unit, and Total Value of stock sitting on your shelf.</li></ul>
+
+<hr/>
+
+<h3>Tab 2: Recipes / BOM (Bill of Materials)</h3>
+<strong>The Cooking Blueprint That Connects Menu Dishes to Raw Ingredients.</strong>
+
+<p>When a customer orders a dish, how does the computer know what was used? The Recipe / BOM!</p>
+
+<p>#### Example: 1 Plate of Chicken Schezwan Fried Rice<br/><div class="table-wrap"><table><tr><th>Ingredient</th><th>Quantity Required</th><th>Cost per Base Unit</th><th>Sub-Cost</th></tr><tr><td>Basmati Rice (Cooked)</td><td>220 g</td><td>₹0.06 / g</td><td>₹13.20</td></tr><tr><td>Boneless Chicken</td><td>90 g</td><td>₹0.28 / g</td><td>₹25.20</td></tr><tr><td>Schezwan Sauce</td><td>40 ml</td><td>₹0.20 / ml</td><td>₹8.00</td></tr><tr><td>Chopped Spring Onions & Bell Peppers</td><td>50 g</td><td>₹0.08 / g</td><td>₹4.00</td></tr><tr><td>Cooking Oil</td><td>25 ml</td><td>₹0.14 / ml</td><td>₹3.50</td></tr><tr><td>Takeaway 750ml Container <em>(if parcel/takeaway)</em></td><td>1 pcs</td><td>₹4.50 / pcs</td><td>₹4.50</td></tr><tr><td><strong>Total Recipe Ingredient Cost</strong></td><td></td><td></td><td><strong>₹58.40</strong></td></tr></table></div><br/>If you sell this plate for <strong>₹220</strong>, your ingredient food cost is:<br/>$$\frac{₹58.40}{₹220} \times 100 = \mathbf{26.5\%} \quad \text{(Fantastic margin! 🟢)}$$</p>
+
+<hr/>
+
+<h3>Tab 3: Receive Stock (<code>purchases</code>)</h3>
+<strong>When the Supplier's Truck Arrives at the Back Door.</strong>
+
+<p>Suppliers don't sell you 150 grams of chicken or 25 millilitres of soy sauce. They sell in bulk packs:<br/><ul><li>A <strong>5 kg</strong> bag of rice.</li><li>A <strong>15-litre</strong> tin of refined sunflower oil.</li><li>A <strong>box of 500</strong> noodle containers.</li></ul></p>
+
+<p>WokMawa's Receive Stock tab has a smart <strong>Pack-to-Base Unit Converter</strong>:<br/><ol><li>You select <strong>"Refined Oil (15L Tin)"</strong>.</li><li>You enter: Received <strong>2 Tins</strong> at <strong>₹2,100 per tin</strong>.</li><li>The system automatically converts this to:</li></ol><br/>   $$2 \times 15{,}000\text{ ml} = \mathbf{30{,}000\text{ ml added to Stock on Hand}}$$<br/><ol><li>The system updates the cost per millilitre:</li></ol><br/>   $$\frac{₹2{,}100}{15{,}000\text{ ml}} = \mathbf{₹0.14\text{ per ml}}$$<br/><ol><li>A <code>purchase</code> movement is recorded in the ledger with date, invoice number, and vendor name.</li></ol></p>
+
+<hr/>
+
+<h3>Tab 4: Wastage Tab</h3>
+<strong>Tracking the Leaks in the Bucket.</strong>
+<ul><li>Staff log any item that cannot be served to a customer.</li><li>Dropdown reasons: <code>spoiled</code>, <code>dropped</code>, <code>expired</code>, <code>overcooked</code>, <code>prep_waste</code>.</li><li>Records who authorized the write-off (staff user ID).</li><li>Feeds straight into the P&L as a direct deduction against gross profit.</li></ul>
+
+<hr/>
+
+<h3>Tab 5: Stock Count (Audit & Physical Reconciliation)</h3>
+<strong>Trust, But Verify.</strong>
+
+<p>At the end of every week or month, the manager walks into the kitchen with a clipboard or tablet and counts what is <em>actually</em> sitting on the shelves.</p>
+
+<p><div class="mermaid-container"><pre class="mermaid">flowchart TD
+    A["System Balance: 10,000 g Chicken"] --> B["Manager Counts Shelf: 9,200 g Found"]
+    B --> C["Variance Calculation: 9,200 - 10,000 = -800 g"]
+    C --> D{"Variance Type"}
+    D -->|"Negative Variance (-800g)"| E["SHRINKAGE / UNACCOUNTED LOSS<br/>(Theft, Unrecorded Spills, or Over-portioning)"]
+    D -->|"Positive Variance (+200g)"| F["FOUND STOCK<br/>(Under-portioning or missed delivery entry)"]
+    E --> G["System posts 'count_adjustment' movement<br/>Balance updated to truth: 9,200 g"]</pre></div></p>
+
+<p>If the system says you should have 10 kg of paneer, but you only count 9 kg, <strong>1 kg went missing</strong>. This is called <strong>shrinkage</strong>. WokMawa records a <code>count_adjustment</code> movement so the computer matches real-life reality.</p>
+
+<hr/>
+
+<h3>Tab 6: Reorder Alerts (<code>low</code>)</h3>
+<strong>The "Never Run Out of Food" Engine.</strong>
+
+<p>Imagine it's Friday night 8:00 PM, restaurant is full, and the head chef yells: <em>"We ran out of noodles!"</em> That's a disaster.</p>
+
+<p>WokMawa prevents this using <strong>Lead Time & Reorder Levels</strong>:<br/><ul><li><strong>Reorder Level:</strong> Minimum quantity below which you must place a new order.</li><li><strong>Lead Time Days:</strong> How many days the supplier takes to deliver after you call them (e.g., 2 days).</li><li><strong>Suggested Order Quantity:</strong> Automatically calculates how much to buy so you have enough stock until the next delivery arrives plus a buffer!</li></ul></p>
+
+<p>Items below reorder level glow <strong>yellow 🟡</strong>, and out-of-stock items glow <strong>red 🔴</strong>.</p>
+
+<hr/>
+
+<h3>Tab 7: Dish Costing & Margins (<code>costing</code>)</h3>
+<strong>The Profitability Microscope.</strong>
+
+<p>This tab lists every single item on your menu and breaks down:<br/><ol><li><strong>Selling Price</strong> (e.g. ₹280)</li><li><strong>Recipe Cost</strong> (e.g. ₹70)</li><li><strong>Gross Margin (₹)</strong> = $₹280 - ₹70 = \mathbf{₹210}$</li><li><strong>Food Cost %</strong> = $\frac{₹70}{₹280} \times 100 = \mathbf{25\%}$</li></ol></p>
+
+<p>It categorizes dishes into:<br/><ul><li>🌟 <strong>Stars (High Profit, High Popularity):</strong> Promote these dishes!</li><li>🧩 <strong>Puzzles (High Profit, Low Popularity):</strong> Train staff to recommend them.</li><li>🐴 <strong>Workhorses (Low Profit, High Popularity):</strong> Slightly raise the price or tweak the recipe portion.</li><li>🪨 <strong>Dogs (Low Profit, Low Popularity):</strong> Consider removing them from the menu.</li></ul></p>
+
+<hr/>
+
+<h3>Tab 8: Movement Log (Audit Ledger)</h3>
+<strong>The Bank Statement of Your Kitchen.</strong>
+
+<p>Every single gram that enters or leaves the kitchen is recorded on an <strong>immutable ledger</strong> (just like your personal bank account statement):</p>
+
+<div class="table-wrap"><table><tr><th>Date & Time</th><th>Item</th><th>Type</th><th>Quantity</th><th>Unit</th><th>Balance After</th><th>Order / Reason</th></tr><tr><td>Oct 17, 12:30 PM</td><td>Chicken Breast</td><td><code>purchase</code></td><td><strong>+ 10,000</strong></td><td>g</td><td>14,500 g</td><td>Vendor PO #1082</td></tr><tr><td>Oct 17, 01:15 PM</td><td>Chicken Breast</td><td><code>sale</code></td><td><strong>- 180</strong></td><td>g</td><td>14,320 g</td><td>Order #WM-401</td></tr><tr><td>Oct 17, 01:42 PM</td><td>Chicken Breast</td><td><code>sale</code></td><td><strong>- 270</strong></td><td>g</td><td>14,050 g</td><td>Order #WM-405</td></tr><tr><td>Oct 17, 03:00 PM</td><td>Chicken Breast</td><td><code>wastage</code></td><td><strong>- 400</strong></td><td>g</td><td>13,650 g</td><td>Burnt during prep</td></tr><tr><td>Oct 17, 11:30 PM</td><td>Chicken Breast</td><td><code>count_adjustment</code></td><td><strong>- 150</strong></td><td>g</td><td>13,500 g</td><td>Night audit variance</td></tr></table></div>
+If a chef claims <em>"I don't know where the butter went!"</em>, the owner opens the Movement Log and can see every exact transaction with timestamp, user ID, and reason.
+
+<hr/>
+
+<h2>5. Complete End-to-End Walkthrough (A Day in WokMawa)</h2>
+
+<p>Let's put everything together with a quick, fun story:</p>
+
+<h3>🌞 Morning: 10:00 AM (Stock Arrival)</h3>
+<ul><li>Vendor truck delivers <strong>20 kg of Chicken Breast</strong> and <strong>50 kg of Hakka Noodles</strong>.</li><li>Kitchen manager opens <strong>Tab 3 (Receive Stock)</strong> and inputs the invoice.</li><li><strong>Tab 1 (Stock on Hand)</strong> instantly updates: Chicken goes from 2 kg to 22 kg!</li></ul>
+
+<h3>🍽️ Lunch Rush: 1:30 PM (Customer Orders)</h3>
+<ul><li>Table 4 scans the QR code on <code>user.wokmawa.com</code> and orders <strong>2x Chicken Hakka Noodles</strong>.</li><li>The order is accepted and cooked.</li><li>The system checks <strong>Tab 2 (Recipes)</strong>:</li><li>Deducts $2 \times 150\text{g} = \mathbf{300\text{g}}$ noodles.</li><li>Deducts $2 \times 80\text{g} = \mathbf{160\text{g}}$ chicken.</li><li><strong>Tab 8 (Movement Log)</strong> stamps: <code>Order #WM-512 sale deduction</code>.</li></ul>
+
+<h3>💥 Afternoon: 4:00 PM (Kitchen Accident)</h3>
+<ul><li>A line cook accidentally burns a batch of fried wontons (worth ₹180 in raw materials).</li><li>The chef logs it in <strong>Tab 4 (Wastage)</strong> with reason: <code>overcooked</code>.</li><li>The ingredients are removed from shelf inventory, and ₹180 is added to the day's waste tally.</li></ul>
+
+<h3>🌙 Night: 11:00 PM (Closing & P&L Statement)</h3>
+<ul><li>The owner opens the <strong>Profit & Loss (P&L)</strong> screen on <code>wokmawa.com/pnl</code>.</li><li>Here is what the computer calculated in seconds:</li></ul>
+<ol><li><strong>Gross Sales:</strong> ₹62,000</li><li><strong>Discounts Given:</strong> -₹3,000</li><li><strong>Net Sales:</strong> <strong>₹59,000</strong></li><li><strong>COGS (from Recipe deductions):</strong> -₹17,700 <em>(30% Food Cost - 🟢 Healthy!)</em></li><li><strong>Gross Profit:</strong> <strong>₹41,300</strong></li><li><strong>Staff Labour Costs:</strong> -₹15,000</li><li><strong>Prime Cost:</strong> ₹32,700 <em>(55.4% - 🟢 Excellent Control!)</em></li><li><strong>Electricity, Rent & Gas for the day:</strong> -₹12,000</li><li><strong>Today's Wastage:</strong> -₹180</li><li><strong>NET PROFIT FOR THE DAY:</strong> <strong>₹14,120 in the owner's pocket!</strong> 🎉</li></ol>
+
+<hr/>
+
+<h2>💡 Summary Cheat Sheet for Reference</h2>
+
+<p><pre><code class="language-">Gross Sales         (Total menu price of all items ordered)
+- Discounts         (Coupons / Promo discounts)
+------------------------------------------------------------
+= NET SALES         (The foundation number for all restaurant ratios)
++ Service/Delivery  (Restaurant's extra service charges)
+------------------------------------------------------------
+= TOTAL REVENUE     (Total legitimate income)
+- COGS              (Raw groceries used: Opening + Buys - Closing)
+------------------------------------------------------------
+= GROSS PROFIT      (Income left after grocery costs)
+- Labour Costs      (Kitchen &amp; service staff salaries)
+------------------------------------------------------------
+= (PRIME COST)      (COGS + Labour — Must stay between 55% and 65%!)
+- Operating/Rent    (Rent, Electricity, LPG Gas, Cleaning, Marketing)
+- Wastage           (Spoiled, burnt, or expired food)
+------------------------------------------------------------
+= NET PROFIT        (Actual money the restaurant takes home)
+</code></pre></p>
+
+<p><em>(Note: GST is recorded on its own separate tax line and is never treated as company profit).</em></p>
+</body>
+</html>
